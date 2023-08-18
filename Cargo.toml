@@ -1,0 +1,20 @@
+[package]
+name = "RustyBot"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+grammers-client = "0.4.0"
+grammers-mtproto = "0.4.0"
+grammers-session = "0.4.0"
+grammers-tl-types = "0.4.0"
+tokio = "1.32.0"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
