@@ -43,11 +43,11 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     let elapsed_time = end_time - start_time;
     let _text_msg = format!("Pong: {:?}!!", elapsed_time);
     let entities: Vec<enums::MessageEntity> = vec![
-        MessageEntity::Bold(tl::MessageEntityBold {
+        enums::MessageEntity::Bold(tl::MessageEntityBold {
             offset: 0,
             length: 5, //_text_msg.len() as i32
         }),
-        MessageEntity::Code(tl::MessageEntityCode {
+        enums::MessageEntity::Code(tl::MessageEntityCode {
             offset: 5,
             length: format!("{:?}", elapsed_time).len() as i32,
         }), 
