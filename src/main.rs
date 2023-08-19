@@ -44,8 +44,12 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     let entities: Vec<MessageEntity> = vec![
         MessageEntity::Bold(MessageEntityBold {
             offset: 0,
-            length: _text_msg.len() as i32,
+            length: 5, //_text_msg.len() as i32
         }),
+        MessageEntity::Code(MesssgeEntityCode {
+            offset: 5,
+            length: format!("{:?}", elapsed_time).len() as i32,
+        }), 
     ];
     client.edit_message(&chat, msg.id(), InputMessage::text(_text_msg).fmt_entities(entities)).await?;
 
