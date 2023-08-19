@@ -1,6 +1,6 @@
 use grammers_client::{Client, Config, InitParams, Update};
 use grammers_session::Session;
-// use grammers_tl_types as tl;
+use grammers_tl_types as tl;
 use tokio::{runtime, task};
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
@@ -37,7 +37,17 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     let end_time = std::time::Instant::now();
     let elapsed_time = end_time - start_time;
-    client.edit_message(&chat, msg.id(), format!("<b>Pong: {:?}!!</b>", elapsed_time)).await?;
+    let _text_msg = format!("Pong: {:?}!!", elapsed_time)
+
+    let bold_entity = tl::MessageEntityBold {
+        offset: 0,
+        length: _text_msg.len(),
+    };
+
+    let mut entities = vec![tl::MessageEntity];
+    entities.extend_from_slice(&original_entities);
+
+    client.edit_message(&chat, msg.id(), InputMessage::text(_text_msg).fmt_entities(entities)).await?;
 
     Ok(())
 }
