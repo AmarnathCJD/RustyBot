@@ -2,7 +2,7 @@ use grammers_client::{Client, Config, InitParams, Update};
 use grammers_session::Session;
 use grammers_tl_types as tl;
 use tokio::{runtime, task};
-user std::time
+use std::time
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
