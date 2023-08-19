@@ -44,9 +44,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
         length: _text_msg.len(),
     };
 
-    let mut entities = vec![tl::types::MessageEntity];
-    entities.extend_from_slice(&original_entities);
-
+    let mut entities = vec![bold_entity];
     client.edit_message(&chat, msg.id(), InputMessage::text(_text_msg).fmt_entities(entities)).await?;
 
     Ok(())
