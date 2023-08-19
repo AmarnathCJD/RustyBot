@@ -1,6 +1,6 @@
 use grammers_client::{Client, Config, InitParams, Update, InputMessage};
 use grammers_session::Session;
-use grammers_tl_types as tl;
+//use grammers_tl_types as tl;
 use tokio::{runtime, task};
 
 use grammers_tl_types::types::MessageEntityBold;
@@ -41,8 +41,6 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     let end_time = std::time::Instant::now();
     let elapsed_time = end_time - start_time;
     let _text_msg = format!("Pong: {:?}!!", elapsed_time);
-
-    MessageEntityBold objects
     let entities: Vec<MessageEntity> = vec![
         MessageEntity::Bold(MessageEntityBold {
         offset: 0,
