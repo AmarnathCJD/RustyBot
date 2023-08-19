@@ -3,7 +3,6 @@ use grammers_session::Session;
 // use grammers_tl_types as tl;
 use tokio::{runtime, task};
 
-const uptime_preq: std::time::Instant = std::time::Instant::now();
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
 async fn handle_update(client: Client, update: Update) -> Result {
@@ -38,9 +37,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     let end_time = std::time::Instant::now();
     let elapsed_time = end_time - start_time;
-    let total_uptime = uptime_preq - end_time;
-
-    client.edit_message(&chat, msg.id(), format!("**Pong: {:?} | Uptime: {:?}**", elapsed_time, total_uptime)).await?;
+    client.edit_message(&chat, msg.id(), format!("**Pong: {:?}!!**", elapsed_time)).await?;
 
     Ok(())
 }
