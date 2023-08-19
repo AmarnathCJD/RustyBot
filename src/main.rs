@@ -48,7 +48,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
             length: 5, //_text_msg.len() as i32
         }),
         enums::MessageEntity::Code(tl::MessageEntityCode {
-            offset: 5,
+            offset: 6,
             length: format!("{:?}", elapsed_time).len() as i32,
         }), 
     ];
