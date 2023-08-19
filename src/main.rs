@@ -31,17 +31,17 @@ async fn is_chat_private(message: grammers_client::types::Message) -> bool {
 
 async fn handle_ping(client: Client, message: grammers_client::types::Message) -> Result {
     let chat = message.chat();
-    let start_time = std::time::Instant::now(); // Record the start time
+    let start_time = std::time::Instant::now();
 
-    let msg = client.send_message(&chat, "Pong").await?; // Send "Pong" message
+    let msg = client.send_message(&chat, "Pong").await?;
 
     println!("{:?}", msg);
-    let end_time = std::time::Instant::now(); // Record the end time
-    let elapsed_time = end_time - start_time; // Calculate elapsed time
+    let end_time = std::time::Instant::now();
+    let elapsed_time = end_time - start_time;
 
-    client.send_message(&chat, format!("Ping response time: {:?}", elapsed_time)).await?; // Send response time message
+    client.edit_message(&chat, msg.id(), format!("Ping response time: {:?}", elapsed_time)).await?;
 
-    Ok(()) // Return Ok to indicate success
+    Ok(())
 }
 
 async fn handle_start_command(client: Client, message: grammers_client::types::Message) -> Result {
