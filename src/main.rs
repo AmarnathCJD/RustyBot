@@ -1,10 +1,11 @@
 use grammers_client::{Client, Config, InitParams, Update, InputMessage};
 use grammers_session::Session;
-//use grammers_tl_types as tl;
+use grammers_tl_types::types as tl;
+use grammers_tl_types::enums as enums;
 use tokio::{runtime, task};
 
-use grammers_tl_types::types::MessageEntityBold;
-use grammers_tl_types::enums::MessageEntity; // If this import works, use it
+// use grammers_tl_types::types::MessageEntityBold;
+// use grammers_tl_types::enums::MessageEntity; // If this import works, use it
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
@@ -41,12 +42,12 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     let end_time = std::time::Instant::now();
     let elapsed_time = end_time - start_time;
     let _text_msg = format!("Pong: {:?}!!", elapsed_time);
-    let entities: Vec<MessageEntity> = vec![
-        MessageEntity::Bold(MessageEntityBold {
+    let entities: Vec<enums::MessageEntity> = vec![
+        MessageEntity::Bold(tl::MessageEntityBold {
             offset: 0,
             length: 5, //_text_msg.len() as i32
         }),
-        MessageEntity::Code(MesssgeEntityCode {
+        MessageEntity::Code(tl::MessageEntityCode {
             offset: 5,
             length: format!("{:?}", elapsed_time).len() as i32,
         }), 
