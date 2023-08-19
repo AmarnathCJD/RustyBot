@@ -2,6 +2,7 @@ use grammers_client::{Client, Config, InitParams, Update};
 use grammers_session::Session;
 use grammers_tl_types as tl;
 use tokio::{runtime, task};
+user std::time
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
@@ -11,6 +12,8 @@ async fn handle_update(client: Client, update: Update) -> Result {
         Update::NewMessage(message) if !message.outgoing() => {
             if message.text() == "/start" {
                 handle_start_command(client, message).await?;
+            } else if message.text() == "/ping" {
+                handle_ping(client, message).await?;
             }
         }
         _ => {}
@@ -25,6 +28,20 @@ async fn is_chat_private(message: grammers_client::types::Message) -> bool {
     } else {
         return false;
     }
+}
+
+async fn handle_ping(client: Client, message: grammers_client::types::Message) -> Result {
+    let chat = message.chat();
+    let start_time = std::time::Instant::now(); // Record the start time
+
+    let msg = client.send_message(&chat, "Pong").await?; // Send "Pong" message
+
+    let end_time = std::time::Instant::now(); // Record the end time
+    let elapsed_time = end_time - start_time; // Calculate elapsed time
+
+    client.send_message(&chat, format!("Ping response time: {:?}", elapsed_time)).await?; // Send response time message
+
+    Ok(()) // Return Ok to indicate success
 }
 
 async fn handle_start_command(client: Client, message: grammers_client::types::Message) -> Result {
