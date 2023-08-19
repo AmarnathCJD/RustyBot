@@ -36,6 +36,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     let msg = client.send_message(&chat, "Pong").await?; // Send "Pong" message
 
+    println!("{:?}", msg);
     let end_time = std::time::Instant::now(); // Record the end time
     let elapsed_time = end_time - start_time; // Calculate elapsed time
 
