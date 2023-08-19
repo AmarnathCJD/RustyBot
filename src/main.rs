@@ -4,7 +4,7 @@ use grammers_session::Session;
 use tokio::{runtime, task};
 
 use grammers_tl_types::types::MessageEntityBold;
-use grammers_tl_types::types::MessageEntity; // If this import works, use it
+use grammers_tl_types::enums::MessageEntity; // If this import works, use it
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
