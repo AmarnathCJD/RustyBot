@@ -3,8 +3,8 @@ use grammers_session::Session;
 use grammers_tl_types as tl;
 use tokio::{runtime, task};
 
-use grammers_tl_types::MessageEntityBold;
-use grammers_tl_types::MessageEntity; // If this import works, use it
+use grammers_tl_types::types::MessageEntityBold;
+use grammers_tl_types::types::MessageEntity; // If this import works, use it
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
