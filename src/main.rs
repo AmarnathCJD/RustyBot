@@ -3,6 +3,9 @@ use grammers_session::Session;
 use grammers_tl_types as tl;
 use tokio::{runtime, task};
 
+use grammers_tl_types::MessageEntityBold;
+use grammers_tl_types::MessageEntity; // If this import works, use it
+
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
 async fn handle_update(client: Client, update: Update) -> Result {
@@ -39,12 +42,13 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     let elapsed_time = end_time - start_time;
     let _text_msg = format!("Pong: {:?}!!", elapsed_time)
 
-    let bold_entity = tl::types::MessageEntityBold {
+    MessageEntityBold objects
+    let entities: Vec<MessageEntity> = vec![
+        MessageEntity::Bold(MessageEntityBold {
         offset: 0,
-        length: _text_msg.len(),
-    };
-
-    let mut entities = vec![bold_entity];
+        length: 5,
+    }),
+    ];
     client.edit_message(&chat, msg.id(), InputMessage::text(_text_msg).fmt_entities(entities)).await?;
 
     Ok(())
