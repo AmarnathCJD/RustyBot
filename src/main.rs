@@ -40,7 +40,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     let end_time = std::time::Instant::now();
     let elapsed_time = end_time - start_time;
-    let _text_msg = format!("Pong: {:?}!!", elapsed_time)
+    let _text_msg = format!("Pong: {:?}!!", elapsed_time);
 
     MessageEntityBold objects
     let entities: Vec<MessageEntity> = vec![
