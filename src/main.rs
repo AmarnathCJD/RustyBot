@@ -80,7 +80,7 @@ async fn handle_start_command(client: Client, message: grammers_client::types::M
 }
 
 async fn async_main() -> Result {
-    let token = "6419307556:AAGDyUmmYntQkyoY8AFljUTWjT3ARK8Y6lk";
+    let token = "6566300513:AAHA2b_SJ3C_Am4BrFsjNb6Vi8jHBLnqdJA";
     let api_id = 3138242;
     let api_hash = "9ff85074c961b349e6dad943e9b20f54";
 
