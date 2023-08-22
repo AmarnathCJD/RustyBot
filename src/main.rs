@@ -79,7 +79,7 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
     let req = client.post("https://nekobin.com/api/documents")
         .json(&json_data)
         .timeout(std::time::Duration::from_secs(5))
-        .send()?;
+        .send().await?;
     
     let response_json: serde_json::Value = req.json()?;
     let key = response_json["result"]["key"].as_str().unwrap();
