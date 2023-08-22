@@ -69,7 +69,7 @@ async fn handle_paste(_client: Client, message: grammers_client::types::Message)
         to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
     }
 
-    let msg = message.reply("Pasting... To NekoBIN.").await?;
+    let msg = message.reply("Pasting...").await?;
     let client = reqwest::Client::new();
     
     let json_data = serde_json::json!({
@@ -97,7 +97,7 @@ async fn handle_paste(_client: Client, message: grammers_client::types::Message)
         }), 
     ];
 
-    msg.edit(InputMessage::text("Pasted To NekoBIN.").fmt_entities(entities)).await?;
+    msg.edit(InputMessage::text("Pasted to [NekoBin].").fmt_entities(entities)).await?;
     Ok(())
 }
         
