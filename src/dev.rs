@@ -55,12 +55,12 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     } else if text.as_str().starts_with("/sh") {
         &text[4..]
     } else {
-        text
+        &text
     };
 
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
-    let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", stderr+stdout, pid, exit_code, execution_time);
-    println!("{:?}", out_message);
+    let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", stderr+&stdout, pid, exit_code, execution_time);
+    println!("{:?}", &out_message);
     
     Ok(())
 }
