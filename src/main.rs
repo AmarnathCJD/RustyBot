@@ -161,13 +161,6 @@ async fn async_main() -> Result {
         println!("RustyBot -> Signed in as a bot");
     }
 
-    let chat = client
-        .resolve_username("roseloverx")
-        .await?
-        .expect("chat not found");
-
-    client.send_message(&chat, "Hello, world!").await?;
-
     // Handle Updates
 
     loop {
