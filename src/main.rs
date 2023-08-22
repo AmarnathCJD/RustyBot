@@ -8,6 +8,7 @@ use serde_json;
 
 mod dev;
     use dev::handle_exec;
+    use dev::update_handle;
 
 // use grammers_tl_types::types::MessageEntityBold;
 // use grammers_tl_types::enums::MessageEntity; // If this import works, use it
@@ -26,6 +27,8 @@ async fn handle_update(client: Client, update: Update) -> Result {
                 handle_paste(client, message).await?;
             } else if message.text().to_string().starts_with("/sh") || message.text().to_string().starts_with("/exec") {
                 handle_exec(client, message).await?;
+            } else if message.text() == "/upd" || message.text() == "/update" {
+                update_handle(client, message).await?;
             }
         }
         _ => {}
