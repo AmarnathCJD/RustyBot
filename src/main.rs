@@ -3,6 +3,8 @@ use grammers_session::Session;
 use grammers_tl_types::types as tl;
 use grammers_tl_types::enums as enums;
 use tokio::{runtime, task};
+use reqwest;
+use serde_json;
 
 // use grammers_tl_types::types::MessageEntityBold;
 // use grammers_tl_types::enums::MessageEntity; // If this import works, use it
@@ -68,7 +70,23 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
         to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
     }
 
-    println!("{:?}", to_paste);
+    let client = reqwest::blocking::Client::new();
+    
+    let json_data = serde_json::json!({
+        "content": to_paste,
+    });
+    
+    let req = client.post("https://nekobin.com/api/documents")
+        .json(&json_data)
+        .timeout(std::time::Duration::from_secs(5))
+        .send()?;
+    
+    let response_json: serde_json::Value = req.json()?;
+    let key = response_json["result"]["key"].as_str().unwrap();
+    let url = format!("https://nekobin.com/{}", key);
+    
+
+    println!("{:?}", url);
     Ok(())
 }
         
