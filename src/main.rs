@@ -6,6 +6,9 @@ use tokio::{runtime, task};
 use reqwest;
 use serde_json;
 
+mod dev
+    use dev::handle_exec;
+
 // use grammers_tl_types::types::MessageEntityBold;
 // use grammers_tl_types::enums::MessageEntity; // If this import works, use it
 
@@ -88,12 +91,12 @@ async fn handle_paste(_client: Client, message: grammers_client::types::Message)
     let entities: Vec<enums::MessageEntity> = vec![
         enums::MessageEntity::TextUrl(tl::MessageEntityTextUrl {
             offset: 10,
-            length: 7, //_text_msg.len() as i32
+            length: 9, //_text_msg.len() as i32
             url: url,
         }),
         enums::MessageEntity::Bold(tl::MessageEntityBold {
             offset: 0,
-            length: 18
+            length: 20
         }), 
     ];
 
