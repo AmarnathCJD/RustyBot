@@ -1,4 +1,5 @@
 use std::process::{Command, Stdio};
+use std::os::unix::process::CommandExt;
 use std::io::Read;
 use std::time::Instant;
 use std::time::Duration;
