@@ -91,7 +91,7 @@ pub async fn update_handle(_client: Client, message: grammers_client::types::Mes
             return Ok(());
         }
 
-        let m = message.reply("Updating...").await?;
+        let m = message.reply("Updating... <3").await?;
 
         let executable = "git";
         let args = ["pull", "&&", "cargo", "build", "--release", "&&", "./target/release/RustyBot"];
@@ -100,7 +100,7 @@ pub async fn update_handle(_client: Client, message: grammers_client::types::Mes
             .args(&args)
             .exec();
 
-        m.edit("Update Failed.");
+        m.edit("Update Failed.").await?;
         Ok(())
 }
             
