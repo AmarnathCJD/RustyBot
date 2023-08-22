@@ -17,6 +17,8 @@ async fn handle_update(client: Client, update: Update) -> Result {
                 handle_start_command(client, message).await?;
             } else if message.text() == "/ping" {
                 handle_ping(client, message).await?;
+            } else if message.text().to_string().starts_with("/paste") {
+                handle_paste(client, message).await?;
             }
         }
         _ => {}
@@ -56,6 +58,20 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     Ok(())
 }
+
+async fn handle_paste(client: Client, message: grammers_client::types::Message) -> Result {
+    let chat = message.chat();
+    let mut to_paste = message.text().to_string(); // Need to make a mutable copy here
+
+    if message.reply_to_msg_id != 0 {
+        let reply = message.get_reply().await?;
+        to_paste = reply.text().to_string(); // Make a mutable copy here as well
+    }
+
+    println!("{:?}", to_paste);
+    Ok(())
+}
+        
 
 async fn handle_start_command(client: Client, message: grammers_client::types::Message) -> Result {
     let chat = message.chat();
