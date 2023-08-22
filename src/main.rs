@@ -70,6 +70,7 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
         to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
     }
 
+    let msg = message.reply("Pasting... To NekoBIN.").await?;
     let client = reqwest::Client::new();
     
     let json_data = serde_json::json!({
@@ -84,8 +85,20 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
     let response_json: serde_json::Value = req.json().await?;
     let key = response_json["result"]["key"].as_str().unwrap();
     let url = format!("https://nekobin.com/{}", key);
-    
 
+    let entities: Vec<enums::MessageEntity> = vec![
+        enums::MessageEntity::TextUrl(tl::MessageEntityTextUrl {
+            offset: 10,
+            length: 7, //_text_msg.len() as i32
+            url: url,
+        }),
+        enums::MessageEntity::Bold(tl::MessageEntityBold {
+            offset: 0,
+            length: 18
+        }), 
+    ];
+
+    msg.edit(InputMessage::text("Pasted To NekoBIN.").fmt_entities(entities)).await?;
     println!("{:?}", url);
     Ok(())
 }
