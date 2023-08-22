@@ -2,7 +2,7 @@ use std::process::{Command, Stdio};
 use std::io::Read;
 use std::time::Instant;
 use std::time::Duration;
-use grammers_client::{Client};
+use grammers_client::{Client, InputMessage};
 use grammers_tl_types::types as tl;
 use grammers_tl_types::enums as enums;
 
@@ -62,7 +62,7 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
 
     // if extracted == "
 
-    let msg = message.reply("Processing...");
+    let msg = message.reply("Processing...").await?;
 
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
     let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", stderr+&stdout, pid, exit_code, execution_time);
