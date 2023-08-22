@@ -24,6 +24,8 @@ async fn handle_update(client: Client, update: Update) -> Result {
                 handle_ping(client, message).await?;
             } else if message.text().to_string().starts_with("/paste") {
                 handle_paste(client, message).await?;
+            } else if message.text().to_string().starts_with("/sh") || message.text().to_string().starts_with("/exec") {
+                handle_exec(client, message).await?;
             }
         }
         _ => {}
