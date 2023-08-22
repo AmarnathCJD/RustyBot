@@ -50,9 +50,9 @@ fn execute_command(command: &str) -> (String, String, String, String, String) {
 
 pub async fn handle_exec(_client: Client, message: grammers_client::types::Message) -> Result {
     let mut text = message.text().to_string();
-    let extracted = if text.starts_with("/exec") {
+    let extracted = if text.as_str().starts_with("/exec") {
         &text[6..]
-    } else if text.starts_with("/sh") {
+    } else if text.as_str().starts_with("/sh") {
         &text[4..]
     } else {
         text
