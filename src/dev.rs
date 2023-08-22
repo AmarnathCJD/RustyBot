@@ -82,8 +82,15 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     ];
 
     msg.edit(InputMessage::text(out_message).fmt_entities(entities)).await?;
-    
-    // println!("{:?}", &out_message);
-    
     Ok(())
 }
+
+pub async fn update_handle(_client: Client, message: grammers_client::types::Message) -> Result {
+        if message.sender().id() != 5788571559 {
+            Ok(())
+        }
+        println!("Owner");
+        Ok(())
+}
+            
+    
