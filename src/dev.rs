@@ -67,7 +67,7 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
     let err_out = stderr + &stdout;
     let mut out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", err_out, pid, exit_code, execution_time);
-    out_message = out_message.replace("\"", "").to_string();
+    out_message = out_message.replace("\"", "").to_string().replace("\\n", "\n").to_string();
 
     
     let entities: Vec<enums::MessageEntity> = vec![
