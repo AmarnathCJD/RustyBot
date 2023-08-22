@@ -48,6 +48,19 @@ fn execute_command(command: &str) -> (String, String, String, String, String) {
     )
 }
 
-pub async fn handle_exec(client: Client, message: grammers_client::types::Message) -> Result {
+pub async fn handle_exec(_client: Client, message: grammers_client::types::Message) -> Result {
+    let mut text = message.text().to_string();
+    let extracted = if text.starts_with("/exec") {
+        &text[6..]
+    } else if text.starts_with("/sh") {
+        &text[4..]
+    } else {
+        text
+    };
+
+    let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
+    let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", stderr+stdout, pid, exit_code, execution_time);
+    println!("{:?}", out_message);
+    
     Ok(())
 }
