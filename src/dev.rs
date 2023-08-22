@@ -65,7 +65,7 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     let msg = message.reply("Processing...").await?;
 
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
-    let err_out = stderr + &stdout
+    let err_out = stderr + &stdout;
     let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", err_out, pid, exit_code, execution_time);
   
 
@@ -73,7 +73,7 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     let entities: Vec<enums::MessageEntity> = vec![
         enums::MessageEntity::Code(tl::MessageEntityCode {
             offset: 8,
-            length: &err_out.len() as i32, //_text_msg.len() as i32
+            length: err_out.len() as i32, //_text_msg.len() as i32
         }),
         enums::MessageEntity::Bold(tl::MessageEntityBold {
             offset: 0,
