@@ -86,8 +86,8 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
 }
 
 pub async fn update_handle(_client: Client, message: grammers_client::types::Message) -> Result {
-        if message.sender().id() != 5788571559 {
-            Ok(())
+        if message.sender().expect("No sended").id() != 5788571559 {
+            return Ok(());
         }
         println!("Owner");
         Ok(())
