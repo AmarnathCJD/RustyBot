@@ -70,7 +70,7 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
         to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
     }
 
-    let client = reqwest::blocking::Client::new();
+    let client = reqwest::Client::new();
     
     let json_data = serde_json::json!({
         "content": to_paste,
