@@ -3,6 +3,8 @@ use std::io::Read;
 use std::time::Instant;
 use std::time::Duration;
 use grammers_client::{Client};
+use grammers_tl_types::types as tl;
+use grammers_tl_types::enums as enums;
 
 type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
@@ -58,8 +60,26 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
         &text
     };
 
+    // if extracted == "
+
+    let msg = message.reply("Processing...");
+
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
     let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", stderr+&stdout, pid, exit_code, execution_time);
+
+    let entities: Vec<enums::MessageEntity> = vec![
+        enums::MessageEntity::Code(tl::MessageEntityCode {
+            offset: 8,
+            length: (stderr+&stdout).len() as i32, //_text_msg.len() as i32
+        }),
+        enums::MessageEntity::Bold(tl::MessageEntityBold {
+            offset: 0,
+            length: out_message.len() as i32,
+        }), 
+    ];
+
+    msg.edit(InputMessage::text(out_message).fmt_entities(entities)).await?;
+    
     println!("{:?}", &out_message);
     
     Ok(())
