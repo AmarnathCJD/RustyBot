@@ -66,7 +66,7 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
 
     let (pid, exit_code, stderr, stdout, execution_time) = execute_command(extracted);
     let err_out = stderr + &stdout;
-    let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", err_out, pid, exit_code, execution_time);
+    let out_message = format!("Shell#: {:?}\nPID: {:?}, <E>: {:?}, <T>: {:?}", err_out.trim_matches('"'), pid, exit_code, execution_time);
   
 
     
