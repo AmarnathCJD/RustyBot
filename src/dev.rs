@@ -2,7 +2,9 @@ use std::process::{Command, Stdio};
 use std::io::Read;
 use std::time::Instant;
 use std::time::Duration;
-use grammers_client::{Client}
+use grammers_client::{Client};
+
+type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
 fn format_duration(duration: Duration) -> String {
     let seconds = duration.as_secs();
@@ -46,6 +48,6 @@ fn execute_command(command: &str) -> (String, String, String, String, String) {
     )
 }
 
-async fn handle_exec(client: Client, message: grammers_client::types::Message) -> Result {
+pub async fn handle_exec(client: Client, message: grammers_client::types::Message) -> Result {
     Ok(())
 }
