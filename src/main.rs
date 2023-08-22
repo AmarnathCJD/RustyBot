@@ -81,7 +81,7 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
         .timeout(std::time::Duration::from_secs(5))
         .send().await?;
     
-    let response_json: serde_json::Value = req.json()?;
+    let response_json: serde_json::Value = req.json().await?;
     let key = response_json["result"]["key"].as_str().unwrap();
     let url = format!("https://nekobin.com/{}", key);
     
