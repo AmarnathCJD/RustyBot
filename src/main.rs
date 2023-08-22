@@ -6,7 +6,7 @@ use tokio::{runtime, task};
 use reqwest;
 use serde_json;
 
-mod dev
+mod dev;
     use dev::handle_exec;
 
 // use grammers_tl_types::types::MessageEntityBold;
