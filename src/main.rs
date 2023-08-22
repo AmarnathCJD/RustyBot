@@ -61,8 +61,7 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
     Ok(())
 }
 
-async fn handle_paste(client: Client, message: grammers_client::types::Message) -> Result {
-    let chat = message.chat();
+async fn handle_paste(_client: Client, message: grammers_client::types::Message) -> Result {
     let mut to_paste = message.text().to_string(); // Need to make a mutable copy here
 
     if message.reply_to_message_id().unwrap_or(0) != 0 {
