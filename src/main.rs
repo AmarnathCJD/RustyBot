@@ -99,7 +99,6 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
     ];
 
     msg.edit(InputMessage::text("Pasted To NekoBIN.").fmt_entities(entities)).await?;
-    println!("{:?}", url);
     Ok(())
 }
         
