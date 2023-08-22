@@ -91,10 +91,10 @@ pub async fn update_handle(_client: Client, message: grammers_client::types::Mes
             return Ok(());
         }
 
-        let m = message.reply("Updating... <3").await?;
+        let m = message.reply("Updating... <2").await?;
 
         let executable = "sh";
-        let args = ["-c", "git", "pull", "&&", "cargo", "build", "--release", "&&", "./target/release/RustyBot"];
+        let args = ["-c", "git pull && cargo build --release && ./target/release/RustyBot"];
 
         Command::new(executable)
             .args(&args)
