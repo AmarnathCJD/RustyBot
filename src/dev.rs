@@ -89,7 +89,17 @@ pub async fn update_handle(_client: Client, message: grammers_client::types::Mes
         if message.sender().expect("No sended").id() != 5788571559 {
             return Ok(());
         }
-        println!("Owner");
+
+        let m = message.reply("Updating...").await?;
+
+        let executable = "git";
+        let args = ["pull", "&&", "cargo", "build", "--release", "&&", "./target/release/RustyBot"];
+
+        Command::new(executable)
+            .args(&args)
+            .exec();
+
+        m.edit("Update Failed.");
         Ok(())
 }
             
