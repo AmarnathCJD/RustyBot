@@ -91,7 +91,14 @@ pub async fn update_handle(_client: Client, message: grammers_client::types::Mes
             return Ok(());
         }
 
-        let m = message.reply("Updating... <3").await?;
+        let entities: Vec<enums::MessageEntity> = vec![
+            enums::MessageEntity::Code(tl::MessageEntityCode {
+                offset: 8,
+                length: err_out.len() as i32, //_text_msg.len() as i32
+            }),
+        ];
+
+        let m = message.reply(InputMessage::text("Updating... <3, Building Cargo 🏗️").fmt_entities(entities))
 
         let executable = "sh";
         let args = ["-c", "git pull && cargo build --release && ./target/release/RustyBot"];
