@@ -63,7 +63,7 @@ async fn handle_paste(client: Client, message: grammers_client::types::Message) 
     let chat = message.chat();
     let mut to_paste = message.text().to_string(); // Need to make a mutable copy here
 
-    if message.reply_to_message_id != 0 {
+    if message.reply_to_message_id() != 0 {
         let reply = message.get_reply().await?;
         to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
     }
