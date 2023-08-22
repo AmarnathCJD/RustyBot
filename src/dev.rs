@@ -51,7 +51,7 @@ fn execute_command(command: &str) -> (String, String, String, String, String) {
 }
 
 pub async fn handle_exec(_client: Client, message: grammers_client::types::Message) -> Result {
-    let mut text = message.text().to_string();
+    let text = message.text().to_string();
     let extracted = if text.as_str().starts_with("/exec") {
         &text[6..]
     } else if text.as_str().starts_with("/sh") {
@@ -70,11 +70,11 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     let entities: Vec<enums::MessageEntity> = vec![
         enums::MessageEntity::Code(tl::MessageEntityCode {
             offset: 8,
-            length: (stderr+&stdout).len() as i32, //_text_msg.len() as i32
+            length: (&stderr+&stdout).len() as i32, //_text_msg.len() as i32
         }),
         enums::MessageEntity::Bold(tl::MessageEntityBold {
             offset: 0,
-            length: out_message.len() as i32,
+            length: &out_message.len() as i32,
         }), 
     ];
 
