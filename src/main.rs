@@ -1,3 +1,5 @@
+use chatbot::chat_bot_handle;
+use chatbot::is_query_chatbot;
 use grammers_client::{Client, Config, InitParams, Update, InputMessage};
 use grammers_session::Session;
 use grammers_tl_types::types as tl;
@@ -8,12 +10,14 @@ use serde_json;
 
 mod dev;
     use dev::handle_exec;
-    use dev::update_handle;
+
+mod chatbot;
+    
 
 // use grammers_tl_types::types::MessageEntityBold;
 // use grammers_tl_types::enums::MessageEntity; // If this import works, use it
 
-type Result = std::result::Result<(), Box<dyn std::error::Error>>;
+pub type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
 async fn handle_update(client: Client, update: Update) -> Result {
     // println!("RustyBot -> Handling update: {:?}", update);
@@ -27,8 +31,11 @@ async fn handle_update(client: Client, update: Update) -> Result {
                 handle_paste(client, message).await?;
             } else if message.text().to_string().starts_with("/sh") || message.text().to_string().starts_with("/exec") {
                 handle_exec(client, message).await?;
-            } else if message.text() == "/upd" || message.text() == "/update" {
-                update_handle(client, message).await?;
+            } else {
+                let msg = message.clone();
+                if is_query_chatbot(msg).await {
+                    chat_bot_handle(client, message).await?;
+                }
             }
         }
         _ => {}

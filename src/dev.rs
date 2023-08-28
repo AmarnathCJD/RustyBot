@@ -1,5 +1,4 @@
 use std::process::{Command, Stdio};
-use std::os::unix::process::CommandExt;
 use std::io::Read;
 use std::time::Instant;
 use std::time::Duration;
@@ -85,30 +84,3 @@ pub async fn handle_exec(_client: Client, message: grammers_client::types::Messa
     msg.edit(InputMessage::text(out_message).fmt_entities(entities)).await?;
     Ok(())
 }
-
-pub async fn update_handle(_client: Client, message: grammers_client::types::Message) -> Result {
-        if message.sender().expect("No sended").id() != 5788571559 {
-            return Ok(());
-        }
-
-        let entities: Vec<enums::MessageEntity> = vec![
-            enums::MessageEntity::Code(tl::MessageEntityCode {
-                offset: 0,
-                length: 30, //_text_msg.len() as i32
-            }),
-        ];
-
-        let m = message.reply(InputMessage::text("Updating... <3, Building Cargo 🏗️").fmt_entities(entities)).await?;
-
-        let executable = "sh";
-        let args = ["-c", "git pull && cargo build --release && ./target/release/RustyBot"];
-
-        Command::new(executable)
-            .args(&args)
-            .exec();
-
-        m.edit("Update Failed.").await?;
-        Ok(())
-}
-            
-    
