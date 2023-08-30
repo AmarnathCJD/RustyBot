@@ -24,9 +24,6 @@ pub async fn get_info_handler(
             }
             let u = client.resolve_username(username).await;
             match u {
-                Ok(u) => {
-                    chat = u.unwrap();
-                }
                 Err(e) => {
                     message
                         .reply(InputMessage::html(format!(
@@ -35,6 +32,9 @@ pub async fn get_info_handler(
                         )))
                         .await?;
                     return Ok(());
+                }
+                Ok(u) => {
+                    chat = u.unwrap();
                 }
             }
         }
