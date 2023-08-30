@@ -12,6 +12,7 @@ mod dev;
     use dev::handle_exec;
 
 mod chatbot;
+mod misc;
     
 
 // use grammers_tl_types::types::MessageEntityBold;
@@ -31,6 +32,8 @@ async fn handle_update(client: Client, update: Update) -> Result {
                 handle_paste(client, message).await?;
             } else if message.text().to_string().starts_with("/sh") || message.text().to_string().starts_with("/exec") {
                 handle_exec(client, message).await?;
+            } else if  message.text().to_string().starts_with("/info") {
+                misc::get_info_handler(client, message).await?;
             } else {
                 let msg = message.clone();
                 if is_query_chatbot(msg).await {
