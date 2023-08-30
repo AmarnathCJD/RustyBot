@@ -162,7 +162,7 @@ pub async fn chat_bot_handle(
     let _client = unsafe { GPT_CLIENT.as_mut().unwrap() };
 
     let result = _client.query(query, chat_id).await.unwrap();
-    let text = result.0.replace("Jenna", message.sender().unwrap().name());
+    let text = result.0.replace("Jenna", message.sender().unwrap().name()).replace("\n", "\\n");
 
     if let grammers_client::types::Chat::User(_) = message.chat() {
         message.respond(text).await?;
