@@ -5,8 +5,8 @@ use grammers_session::Session;
 use grammers_tl_types::types as tl;
 use grammers_tl_types::enums as enums;
 use tokio::{runtime, task};
-use reqwest;
-use serde_json;
+//use reqwest;
+//use serde_json;
 
 mod dev;
     use dev::handle_exec;
@@ -29,7 +29,7 @@ async fn handle_update(client: Client, update: Update) -> Result {
             } else if message.text() == "/ping" {
                 handle_ping(client, message).await?;
             } else if message.text().to_string().starts_with("/paste") {
-                handle_paste(client, message).await?;
+                misc::handle_paste(client, message).await?;
             } else if message.text().to_string().starts_with("/sh") || message.text().to_string().starts_with("/exec") {
                 handle_exec(client, message).await?;
             } else if  message.text().to_string().starts_with("/info") {
@@ -78,47 +78,6 @@ async fn handle_ping(client: Client, message: grammers_client::types::Message) -
 
     Ok(())
 }
-
-async fn handle_paste(_client: Client, message: grammers_client::types::Message) -> Result {
-    let mut to_paste = message.text().to_string(); // Need to make a mutable copy here
-
-    if message.reply_to_message_id().unwrap_or(0) != 0 {
-        let reply = message.get_reply().await?;
-        to_paste = reply.expect("Meh").text().to_string(); // Make a mutable copy here as well
-    }
-
-    let msg = message.reply("Pasting...").await?;
-    let client = reqwest::Client::new();
-    
-    let json_data = serde_json::json!({
-        "content": to_paste,
-    });
-    
-    let req = client.post("https://nekobin.com/api/documents")
-        .json(&json_data)
-        .timeout(std::time::Duration::from_secs(5))
-        .send().await?;
-    
-    let response_json: serde_json::Value = req.json().await?;
-    let key = response_json["result"]["key"].as_str().unwrap();
-    let url = format!("https://nekobin.com/{}", key);
-
-    let entities: Vec<enums::MessageEntity> = vec![
-        enums::MessageEntity::TextUrl(tl::MessageEntityTextUrl {
-            offset: 10,
-            length: 9, //_text_msg.len() as i32
-            url: url,
-        }),
-        enums::MessageEntity::Bold(tl::MessageEntityBold {
-            offset: 0,
-            length: 20
-        }), 
-    ];
-
-    msg.edit(InputMessage::text("Pasted to [NekoBin].").fmt_entities(entities)).await?;
-    Ok(())
-}
-        
 
 async fn handle_start_command(client: Client, message: grammers_client::types::Message) -> Result {
     let chat = message.chat();
@@ -174,7 +133,9 @@ async fn async_main() -> Result {
         println!("RustyBot -> Signed in as a bot");
     }
 
-    // Handle Updates
+    let _ = ctrlc::set_handler(move || {
+        std::process::exit(0);
+    });
 
     loop {
         let update = client.next_update().await;

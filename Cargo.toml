@@ -6,6 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = "0.4.28"
+ctrlc = "3.4.0"
 grammers-client = { version = "0.4.0", features = ["html"] }
 grammers-mtproto = "0.4.0"
 grammers-session = "0.4.0"

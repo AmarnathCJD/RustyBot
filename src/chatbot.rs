@@ -7,7 +7,7 @@ type CommandResult = std::result::Result<(), Box<dyn std::error::Error>>;
 
 struct GPT {
     authkey: String,
-    query_limit: u32,
+    //query_limit: u32,
     parent_id: String,
     convos: HashMap<i64, String>,
 }
@@ -18,7 +18,7 @@ impl GPT {
     fn new(authkey: String, parent_id: String) -> GPT {
         GPT {
             authkey: authkey,
-            query_limit: 100,
+            //query_limit: 100,
             parent_id: parent_id,
             convos: HashMap::new(),
         }
