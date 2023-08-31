@@ -257,6 +257,7 @@ pub async fn get_info_handler(
                                 c.about
                             ));
                         }
+                        
                         info.push_str(&format!(
                             "<b>A({})|K({})|B({})</b>\n",
                             c.admins_count.unwrap_or(0),
