@@ -5,8 +5,6 @@ use grammers_session::Session;
 use grammers_tl_types::types as tl;
 use grammers_tl_types::enums as enums;
 use tokio::{runtime, task};
-//use reqwest;
-//use serde_json;
 
 mod dev;
     use dev::handle_exec;
@@ -14,9 +12,6 @@ mod dev;
 mod chatbot;
 mod misc;
     
-
-// use grammers_tl_types::types::MessageEntityBold;
-// use grammers_tl_types::enums::MessageEntity; // If this import works, use it
 
 pub type Result = std::result::Result<(), Box<dyn std::error::Error>>;
 
@@ -102,9 +97,9 @@ async fn handle_start_command(client: Client, message: grammers_client::types::M
 }
 
 async fn async_main() -> Result {
-    let token = "6566300513:AAHA2b_SJ3C_Am4BrFsjNb6Vi8jHBLnqdJA";
-    let api_id = 3138242;
-    let api_hash = "9ff85074c961b349e6dad943e9b20f54";
+    let token = "<BOT_TOKEN>";
+    let api_id = 6;
+    let api_hash = "<API_HASH>";
 
     println!("RustyBot -> Connecting to Telegram...");
     let client = Client::connect(Config {
